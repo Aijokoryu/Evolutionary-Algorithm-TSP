@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<travellingSalesmanProblemInstance>
+
+  <name>smallTestSample</name>
+
+  <source>Me</source>
+
+  <description>4 Locations for small Test</description>
+
+  <graph>
+    <vertex>
+      <edge cost="3">1</edge>
+      <edge cost="5">2</edge>
+      <edge cost="10">3</edge>
+    </vertex>
+    <vertex>
+      <edge cost="3">0</edge>
+      <edge cost="3">2</edge>
+      <edge cost="7">3</edge>
+    </vertex>
+    <vertex>
+      <edge cost="5">0</edge>
+      <edge cost="3">1</edge>
+      <edge cost="6">3</edge>
+    </vertex>
+    <vertex>
+      <edge cost="10">0</edge>
+      <edge cost="7">1</edge>
+      <edge cost="6">2</edge>
+    </vertex>
+  </graph>
+
+</travellingSalesmanProblemInstance>
