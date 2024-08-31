@@ -96,7 +96,10 @@ namespace Evolutionary_Algorithm_TSP {
                 InitialPopulation();
                 for (int i = 0; i < generations; i++) {
                     //parent selection, however since we always have only 2 parents, we dont need to look select new parents
-                    Population newPopulation = Variation();
+                    //VARIATIOn = CROSSOVER + RECOMBINATION
+                    Population newPopulation = Crossover();
+                    Evaluation(newPopulation, ref improvement);
+                    newPopulation = Mutation(newPopulation);
                     Evaluation(newPopulation, ref improvement);
                 }
                 Console.WriteLine("Your settings:\nXMLData" + xmlData + "\nGenerations:" + generations + "\nMutationprobability:" + mutationProbability
@@ -152,16 +155,6 @@ namespace Evolutionary_Algorithm_TSP {
                 secondBestPopulation = population;
                 Console.WriteLine("2 got updated to:" + secondBestPopulation.fitnessValue + "\n");
             }
-        }
-        /// <summary>
-        /// Methode "Variation" makes a crossover and mutation.
-        /// </summary>
-        private Population Variation() {
-            //Crossover + Mutation
-            Population newPopulation = Crossover();
-            newPopulation = Mutation(newPopulation);
-            newPopulation.RecalculateFitnessValue(paths);
-            return newPopulation;
         }
 
         /// <summary>
