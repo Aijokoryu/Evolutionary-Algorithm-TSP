@@ -210,12 +210,15 @@ namespace Evolutionary_Algorithm_TSP {
                 //also helps a lot for improving if you think about it
                 bool match = false;
                 foreach (Individual individual in firstOriginalPopulation.individuals) {
-                    if (secondOriginalPopulation.individuals.Contains(individual)) {
-                        match = true;
-                        break;
+                    foreach(Individual secondIndividual in secondBestPopulation.individuals) {
+                        if (individual.vertex == secondIndividual.vertex) {
+                            match = true;
+                            goto outer; 
+                        }
                     }
                 }
-                
+                outer:
+
                 //if we have a match we take the the individual which is in the path that is better (smaller cost)
                 //else just add from the first, since the first is also the bestPopulation and its more likely that this results in better values
                 for (int index = tuple.Item1; index < tuple.Item2; index++)
