@@ -161,8 +161,9 @@ namespace Evolutionary_Algorithm_TSP {
         /// Methode "Crossover" Rearrangement of genetic material from multiple (two) parents.
         /// </summary>
         private Population Crossover() {
-            Decimal amountOfCititesPerIteration = (int)(firstBestPopulation.individuals.Count / (crossoverAmount));
-            
+            int amountOfCititesPerIteration = (int)(firstBestPopulation.individuals.Count / (crossoverAmount));
+            if(firstBestPopulation.individuals.Count%amountOfCititesPerIteration!=0) amountOfCititesPerIteration++;
+
             int startIndex= 0;
             List<Tuple<int,int>> crossoverSectors = new List<Tuple<int,int>>();
 
