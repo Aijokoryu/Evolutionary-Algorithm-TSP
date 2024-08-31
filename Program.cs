@@ -10,7 +10,7 @@ Console.WriteLine("Hello, World!");
  crossoveramount = how often each population path should be split up, before it gets re-arranged (can influence the runtime)
  */
 
-Tsp tsp = new Tsp("berlin52.xml", 100_000, 66,1000,4);
+Tsp tsp = new Tsp("burma14.xml", 100_000, 70,100,4);
 tsp.GenerateSolution();
 //readkey to not end the programm immediatly
 Console.ReadKey();

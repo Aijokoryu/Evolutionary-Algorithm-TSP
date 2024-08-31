@@ -161,7 +161,7 @@ namespace Evolutionary_Algorithm_TSP {
         /// Methode "Crossover" Rearrangement of genetic material from multiple (two) parents.
         /// </summary>
         private Population Crossover() {
-            Decimal amountOfCititesPerIteration = Math.Ceiling((Decimal)firstBestPopulation.individuals.Count / (crossoverAmount));
+            Decimal amountOfCititesPerIteration = (int)(firstBestPopulation.individuals.Count / (crossoverAmount));
             
             int startIndex= 0;
             List<Tuple<int,int>> crossoverSectors = new List<Tuple<int,int>>();
@@ -169,14 +169,14 @@ namespace Evolutionary_Algorithm_TSP {
             for (int crossoverIteration = 0; crossoverIteration < crossoverAmount; crossoverIteration++)
             {
                 //set end indexes for each section
-                int endIndex = (int)(startIndex + amountOfCititesPerIteration - 1);
-                if (endIndex > firstBestPopulation.individuals.Count) endIndex = firstBestPopulation.individuals.Count-1;
+                int endIndex = (int)(startIndex + amountOfCititesPerIteration);
+                if (endIndex > firstBestPopulation.individuals.Count) endIndex = firstBestPopulation.individuals.Count;
 
                 //insert the section ranges to the list
                 crossoverSectors.Add(new Tuple<int, int>(startIndex, endIndex));
 
                 //set new start value
-                startIndex = endIndex + 1;
+                startIndex = endIndex;
 
             }
 
@@ -188,8 +188,10 @@ namespace Evolutionary_Algorithm_TSP {
                 Population firstOriginalPopulation = new Population();
                 Population secondOriginalPopulation = new Population();
                 //for each section range, get the best Individuals from the best Populations, and add those to the temporary Populations
-                for (int index = tuple.Item1;  index < tuple.Item2+1 ; index++)
+                
+                for (int index = tuple.Item1;  index < tuple.Item2; index++)
                 {
+                    //Console.WriteLine(index + " from:" + tuple.Item1 + " to:" + tuple.Item2);
                     firstOriginalPopulation.AddIndividual(firstBestPopulation.individuals[index].vertex);
                     secondOriginalPopulation.AddIndividual(secondBestPopulation.individuals[index].vertex);
                 }
@@ -202,22 +204,22 @@ namespace Evolutionary_Algorithm_TSP {
                 //now check if the given Individuals from one section are in the other one
                 //we do this because, we want to ensure that we dont have duplicates, and
                 //dont want to create something like [ from city:1, to city:1]
-                //therefore we can only add parts, where it matches => and we already have the value
+                //therefore we can only add parts, where it doesnt match => and we already have the value
 
                 //also helps a lot for improving if you think about it
-                bool match = true;
+                bool match = false;
                 foreach (Individual individual in firstOriginalPopulation.individuals) {
                     if (secondOriginalPopulation.individuals.Contains(individual)) {
-                        match = false;
+                        match = true;
                         break;
                     }
                 }
                 
                 //if we have a match we take the the individual which is in the path that is better (smaller cost)
                 //else just add from the first, since the first is also the bestPopulation and its more likely that this results in better values
-                for (int index = tuple.Item1; index < tuple.Item2+1; index++)
+                for (int index = tuple.Item1; index < tuple.Item2; index++)
                 {
-                    if (match && firstOriginalPopulation.fitnessValue > secondOriginalPopulation.fitnessValue) {
+                    if (match==false && firstOriginalPopulation.fitnessValue > secondOriginalPopulation.fitnessValue) {
                         newPopulation.AddIndividual(secondBestPopulation.individuals[index].vertex);
                     } else {
                         newPopulation.AddIndividual(firstBestPopulation.individuals[index].vertex);
